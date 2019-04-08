@@ -1,9 +1,6 @@
 {
     "name": "madeiramadeirabr/event-observer",
     "description": "Observer design pattern: https://pt.wikipedia.org/wiki/Observer",
-    "require-dev": {
-        "phpunit/phpunit": "^8.1"
-    },
     "authors": [
         {
             "name": "Rafael Ortega Bueno",
@@ -13,9 +10,20 @@
     "require": {
         "php": "^7.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1"
+    },
     "autoload": {
         "psr-4": {
-            "Application\\Event": "src"
+            "Application\\Core\\Event\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Application\\Core\\Event\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
     }
 }
