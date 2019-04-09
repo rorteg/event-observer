@@ -30,13 +30,13 @@ Adicione as seguintes linhas no composer.json
     "repositories": [
         {
             "type": "git",
-            "url":  "git@github.com:madeiramadeirabr/sarge.git"
+            "url":  "git@github.com:rorteg/event-observer.git"
         }
     ]
     
 Execute:
 ```
-composer require madeiramadeirabr/event-observer
+composer require rorteg/event-observer
 ```
 
 ## Exemplo de uso
