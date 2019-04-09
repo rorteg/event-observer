@@ -86,7 +86,7 @@ Exemplo: Se criar um disparador de evento dentro de uma model Order no método a
 
 
 ## Testes
-Clone o repositório e depois execute o comando abaixo:
+Clone o repositório, instale as dependências via Composer e depois execute o comando abaixo:
 ```
 composer test
 ```
