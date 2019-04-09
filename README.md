@@ -36,7 +36,7 @@ Adicione as seguintes linhas no composer.json
     
 Execute:
 ```
-composer require rorteg/event-observer
+composer require madeiramadeirabr/event-observer
 ```
 
 ## Exemplo de uso
