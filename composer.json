@@ -15,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Application\\Core\\Event\\": "src/"
+            "Server\\Core\\Event\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Application\\Core\\Event\\Tests\\": "tests/"
+            "Server\\Core\\Event\\Tests\\": "tests/"
         }
     },
     "scripts": {

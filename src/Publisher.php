@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\Event;
+namespace Server\Core\Event;
 
 use SplObserver;
 use InvalidArgumentException;
@@ -29,7 +29,7 @@ class Publisher implements PublisherInterface
      * @param int $priority
      * @return void
      */
-    public function attach(SplObserver $observer, int $priority = 0) : void
+    public function attach(SplObserver $observer) : void
     {
         if (! ($observer instanceof ObserverInterface)) {
             throw new InvalidArgumentException(
@@ -39,8 +39,7 @@ class Publisher implements PublisherInterface
 
         $observerKey = spl_object_hash($observer);
         $this->observers[$observerKey] = $observer;
-        $this->linkedList[$observerKey] = method_exists($observer, 'getPriority') ? 
-            $observer->getPriority() : $priority;
+        $this->linkedList[$observerKey] = $observer->getPriority();
         arsort($this->linkedList);
     }
 
@@ -80,9 +79,14 @@ class Publisher implements PublisherInterface
      */
     public function getSubscribers() : array
     {
-        ksort($this->observers);
-        
-        return $this->observers;
+        $observers = $this->observers;
+        $observersSort = [];
+
+        foreach ($this->linkedList as $key => $value) {
+            $observersSort[] = $this->observers[$key];
+        }
+
+        return $observersSort;
     }
 
     /**

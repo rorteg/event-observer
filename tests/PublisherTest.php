@@ -1,11 +1,11 @@
 <?php
 
-namespace Application\Core\Event\Tests;
+namespace Server\Application\Core\Event\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Application\Core\Event\Publisher;
+use Server\Core\Event\Publisher;
 use SplSubject;
-use Application\Core\Event\Tests\Stub\Observer;
+use Server\Core\Event\ObserverInterface as Observer;
 
 class PublisherTest extends TestCase
 {
@@ -25,7 +25,7 @@ class PublisherTest extends TestCase
     public function setUp() : void
     {
         $this->observerStubClass = $this->getMockBuilder(Observer::class)
-            ->setMethods(['update'])
+            ->setMethods(['update', 'getPriority'])
             ->getMock();
         
         $this->publisher = new Publisher();
@@ -68,29 +68,48 @@ class PublisherTest extends TestCase
         $this->assertContains('test', $this->publisher->getEvent());
     }
 
-    public function testPriorityExec()
+    public function testDataEventDataChangeAndPriority()
     {
+        $originalData = ['data' => 'test1'];
+        $expectedData = ['data' => 'test3'];
+
         /** @var Observer $observer1 */
         $observer1 = $this->getMockBuilder(Observer::class)
-            ->setMethods(['update'])
+            ->setMethods(['update', 'getPriority'])
             ->getMock();
-    
+        
+        $observer1->expects($this->once())
+        ->method('update')
+        ->with($this->callback(function ($subject) use ($originalData) {
+            $subject->setEvent($originalData);
+            return true;
+        }));
+
+        $observer1->expects($this->once())
+            ->method('getPriority')
+            ->willReturn(10);
+
         /** @var Observer $observer2 */
         $observer2 = $this->getMockBuilder(Observer::class)
-            ->setMethods(['update'])
+            ->setMethods(['update', 'getPriority'])
             ->getMock();
+        
+        $observer2->expects($this->once())
+        ->method('update')
+        ->with($this->callback(function ($subject) use ($expectedData) {
+            $subject->setEvent($expectedData);
+            return true;
+        }));
 
-        /** @var Observer $observer3 */    
-        $observer3 = $this->getMockBuilder(Observer::class)
-            ->setMethods(['update'])
-            ->getMock();
+        $observer2->expects($this->once())
+            ->method('getPriority')
+            ->willReturn(5);
 
-        $publisher = new Publisher();
-        $publisher->attach($observer1, 10);
-        $publisher->attach($observer2, 5);
-        $publisher->attach($observer3, 0);
-        $observers = $publisher->getSubscribers();
+        $publisher = new Publisher('General');
+        $publisher->attach($observer1);
+        $publisher->attach($observer2);
+        $publisher->notify();
 
-        $this->assertSame($observer3, current($observers));
+        $this->assertSame($expectedData, $publisher->getEvent());
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Core\Event;
+namespace Server\Core\Event;
 
 interface PublisherInterface extends \SplSubject
 {
