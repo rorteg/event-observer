@@ -43,7 +43,7 @@ composer require madeiramadeirabr/event-observer
 
 O ideal usar configturações de modo a poder preparar os observers no início do cíclo de uma request e persistir o objeto (Publisher) até o envio da response para que qualquer classe durante o cíclo possa apenas executar o método notify() da classe \Server\Core\Event\Publisher.
 
-Porém é possível utilizar de forma pontual utilizando a \Server\Core\Event\EventObserverFactory e injetando os observers diretamente no momento de disparar um evento, dessa forma o impacto na aplicação é apenas pontual.
+Porém é possível utilizar de forma pontual utilizando a \Server\Core\Event\EventObserverFactory e injetando os observers diretamente no momento de disparar um evento, dessa forma o impacto na aplicação é apenas pontual. Pode por exemplo setar uma constante contendo um array com as classes observadoras e passar como parâmetro para que não fique como responsabilidade da classe disparadora definir os observadores.
 
 ```
 ventObserverFactory::dispatchEvent(
