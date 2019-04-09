@@ -83,3 +83,10 @@ class IntegrateOrderToOtherServices implements ObserverInterface
 ## Precauções
 Como é possível receber objetos dentro de um observador é necessário um certo cuidado ao executar um método de um determinado objeto que pode ser um disparador de um evento.
 Exemplo: Se criar um disparador de evento dentro de uma model Order no método afterSave e dentro de um observador você receber a model Order e salvar novamente, ele irá executar o observador novamente e cair em um loop infinito. Caso seja necessário essa abordagem, sempre crie uma checagem antes do método que salva os dados novamente na Model.
+
+
+## Testes
+```
+// Clone o repositório e depois execute o comando abaixo:
+composer test
+```
