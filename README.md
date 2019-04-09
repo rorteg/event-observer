@@ -46,7 +46,7 @@ O ideal usar configturações de modo a poder preparar os observers no início d
 Porém é possível utilizar de forma pontual utilizando a \Server\Core\Event\EventObserverFactory e injetando os observers diretamente no momento de disparar um evento, dessa forma o impacto na aplicação é apenas pontual. Pode por exemplo setar uma constante contendo um array com as classes observadoras e passar como parâmetro para que não fique como responsabilidade da classe disparadora definir os observadores.
 
 ```
-ventObserverFactory::dispatchEvent(
+EventObserverFactory::dispatchEvent(
             'key_name_to_identify_event',
             [ // Array contendo os observadores para escutarem esse evento.
                 Observer1::class, 
@@ -79,3 +79,7 @@ class IntegrateOrderToOtherServices implements ObserverInterface
 }
 
 ```
+
+## Precauções
+Como é possível receber objetos dentro de um observador é necessário um certo cuidado ao executar um método de um determinado objeto que pode ser um disparador de um evento.
+Exemplo: Se criar um disparador de evento dentro de uma model Order no método afterSave e dentro de um observador você receber a model Order e salvar novamente, ele irá executar o observador novamente e cair em um loop infinito. Caso seja necessário essa abordagem, sempre crie uma checagem antes do método que salva os dados novamente na Model.
