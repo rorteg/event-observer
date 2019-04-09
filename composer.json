@@ -1,6 +1,7 @@
 {
     "name": "madeiramadeirabr/event-observer",
     "description": "Observer design pattern: https://pt.wikipedia.org/wiki/Observer",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Rafael Ortega Bueno",
