@@ -67,7 +67,7 @@ Você pode criar classes observadoras para injetar no método explicado acima ap
 
 namespace YourNamespace;
 
-use  \Server\Core\Event\ObserverInterface
+use  Server\Core\Event\ObserverInterface
 
 class IntegrateOrderToOtherServices implements ObserverInterface
 {
