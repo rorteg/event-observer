@@ -1,6 +1,6 @@
 <?php
 
-namespace Server\Core\Event;
+namespace MadeiraMadeiraBr\Event;
 
 interface PublisherInterface extends \SplSubject
 {

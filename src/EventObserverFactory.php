@@ -1,10 +1,10 @@
 <?php
 
-namespace Server\Core\Event;
+namespace MadeiraMadeiraBr\Event;
 
-use Server\Core\Event\PublisherInterface;
-use Server\Core\Event\Publisher;
-use Server\Core\Event\EventObserverFactoryInterface;
+use MadeiraMadeiraBr\Event\PublisherInterface;
+use MadeiraMadeiraBr\Event\Publisher;
+use MadeiraMadeiraBr\Event\EventObserverFactoryInterface;
 
 final class EventObserverFactory implements EventObserverFactoryInterface
 {

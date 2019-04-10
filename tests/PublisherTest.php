@@ -1,11 +1,11 @@
 <?php
 
-namespace Server\Application\Core\Event\Tests;
+namespace MadeiraMadeiraBr\Event\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Server\Core\Event\Publisher;
+use MadeiraMadeiraBr\Event\Publisher;
 use SplSubject;
-use Server\Core\Event\ObserverInterface as Observer;
+use MadeiraMadeiraBr\Event\ObserverInterface as Observer;
 
 class PublisherTest extends TestCase
 {

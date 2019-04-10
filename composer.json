@@ -16,12 +16,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Server\\Core\\Event\\": "src/"
+            "MadeiraMadeiraBr\\Event\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Server\\Core\\Event\\Tests\\": "tests/"
+            "MadeiraMadeiraBr\\Event\\Tests\\": "tests/"
         }
     },
     "scripts": {
