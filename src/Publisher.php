@@ -5,7 +5,7 @@ namespace MadeiraMadeiraBr\Event;
 use SplObserver;
 use InvalidArgumentException;
 
-class Publisher implements PublisherInterface
+class Publisher implements PublisherInterface, \SplSubject
 {
     /**
      * @var array
@@ -33,7 +33,7 @@ class Publisher implements PublisherInterface
     {
         if (! ($observer instanceof ObserverInterface)) {
             throw new InvalidArgumentException(
-                'The observer class needs to implement Application\Constants\Event\ObserverInterface'
+                'The observer class needs to implement MadeiraMadeiraBr\Event\ObserverInterface'
             );
         }
 
@@ -53,7 +53,7 @@ class Publisher implements PublisherInterface
     {
         if (! ($observer instanceof ObserverInterface)) {
             throw new InvalidArgumentException(
-                'The observer class needs to implement Application\Constants\Event\ObserverInterface'
+                'The observer class needs to implement MadeiraMadeiraBr\Event\ObserverInterface'
             );
         }
 

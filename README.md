@@ -41,25 +41,29 @@ composer require madeiramadeirabr/event-observer
 
 ## Exemplo de uso
 
-O ideal usar configturações de modo a poder preparar os observers no início do cíclo de uma request e persistir o objeto (Publisher) até o envio da response para que qualquer classe durante o cíclo possa apenas executar o método notify() da classe \MadeiraMadeiraBr\Event\Publisher.
 
-Porém é possível utilizar de forma pontual utilizando a \MadeiraMadeiraBr\Event\EventObserverFactory e injetando os observers diretamente no momento de disparar um evento, dessa forma o impacto na aplicação é apenas pontual. Pode por exemplo setar uma constante contendo um array com as classes observadoras e passar como parâmetro para que não fique como responsabilidade da classe disparadora definir os observadores.
 
 ```
-EventObserverFactory::dispatchEvent(
-            'key_name_to_identify_event',
-            [ // Array contendo os observadores para escutarem esse evento.
-                Observer1::class, 
-                Observer2::class,
-                Observer3::class
-            ],
-            $this // Aqui você pode passar tanto o escopo da classe que está executando como passar um array com dados ou nada.
-        )
+// Composer autoload
+require_once('vendor/autoload.php');
+
+use MadeiraMadeiraBr\Event\EventObserverFactory;
+use MadeiraMadeiraBr\Integration\Event\Tests\Stub\Observer;
+use MadeiraMadeiraBr\Integration\Event\Tests\Stub\Observer2;
+
+// Factory Singleton Instance
+$eventFactory = EventObserverFactory::getInstance();
+
+// Adiciona os observers com uma key para referenciar o evento.
+$eventFactory->addObserversToEvent('event_test', [Observer2::class, Observer::class]);
+
+// Dispara o evento onde serão instanciados todos os objetos setados anteriormente.
+$publisher = $eventFactory->dispatchEvent('event_test');
 ```
 
 ## Observadores
 
-Você pode criar classes observadoras para injetar no método explicado acima apenas implementando a interface: \MadeiraMadeiraBr\Event\ObserverInterface
+Você pode criar classes observadores para injetar no método explicado acima apenas implementando a interface: \MadeiraMadeiraBr\Event\ObserverInterface
 
 ### Exemplo:
 ```
@@ -71,14 +75,28 @@ use  MadeiraMadeiraBr\Event\ObserverInterface
 
 class IntegrateOrderToOtherServices implements ObserverInterface
 {
+    /**
+    * {@inheritdoc}
+    */
     public function update(SplSubject $publisher)
     {
         // Você pode pegar os dados passados no dispatchEvent dessa forma:
         $order = $publisher->getEvent();
     }
+
+    /**
+    * {@inheritdoc}
+    */
+    public function getPriority()
+    {
+        return 0;
+    }
 }
 
 ```
+
+A execução sempre seguirá a prioridade retornada de dentro de cada observador, independente se ele é setado antes ou depois de outros.
+
 
 ## Precauções
 Como é possível receber objetos dentro de um observador é necessário um certo cuidado ao executar um método de um determinado objeto que pode ser um disparador de um evento.

@@ -2,7 +2,7 @@
 
 namespace MadeiraMadeiraBr\Event;
 
-interface PublisherInterface extends \SplSubject
+interface PublisherInterface
 {
     /**
      * Get Observers subscribers

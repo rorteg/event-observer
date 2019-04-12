@@ -1,6 +1,6 @@
 <?php
 
-namespace MadeiraMadeiraBr\Event\Tests;
+namespace MadeiraMadeiraBr\Unit\Event\Tests;
 
 use PHPUnit\Framework\TestCase;
 use MadeiraMadeiraBr\Event\Publisher;

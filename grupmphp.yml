@@ -1,0 +1,19 @@
+
+parameters:
+    git_dir: .
+    bin_dir: vendor/bin
+    tasks:
+        composer: ~
+        file_size: ~
+        commit_message: ~
+        jsonlint: ~
+        phpversion: ~
+        shell: ~
+        xmllint: ~
+        yamllint: ~
+        phpcs:
+            standard: ['PSR2']
+            ignore_patterns: ['app/*/*/migrations','app/*/*/seeds','app/bootstrap.php','app/*/*/view']
+        phpunit:
+            config_file: 'phpunit.xml'
+            testsuite: 'Unit'

@@ -5,29 +5,43 @@ namespace MadeiraMadeiraBr\Event;
 interface EventObserverFactoryInterface
 {
     /**
-     * Fire event with subscribers (observers)
+     * Get Factory Instance
      *
-     * @param stringt $eventName
-     * @param array $subscribers array with ["int priority execution" => "Observer class reference"]
+     * @return EventObserverFactoryInterface
+     */
+    public static function getInstance() : EventObserverFactoryInterface;
+
+    /**
+     * Add event key
+     *
+     * @param string $eventKey
+     * @return EventObserverFactoryInterface
+     */
+    public function addEventKey(string $eventKey) : EventObserverFactoryInterface;
+
+    /**
+     * Get array with event keys and observables class references values.
+     *
+     * @return array
+     */
+    public function getEvents() : array;
+
+    /**
+     * Add observables to event key
+     *
+     * @param string $eventKey
+     * @param array $observers
+     * @return EventObserverFactoryInterface
+     */
+    public function addObserversToEvent(string $eventKey, array $observers) : EventObserverFactoryInterface;
+
+    /**
+     * Fire event
+     *
+     * @param stringt $eventKey
      * @param mixed $data
      * @return mixed
      */
-    public static function dispatchEvent(string $eventName, array $subscribers, $data) : PublisherInterface;
+    public function dispatchEvent(string $eventKey, $data = []) : PublisherInterface;
 
-    /**
-     * @param array $observers
-     * @return void
-     */
-    public static function attachObservers(array $observers) : void;
-
-    /**
-     * @param PublisherInterface $publisher
-     * @return void
-     */
-    public static function setPublisher(PublisherInterface $publisher) : void;
-
-    /**
-     * @return PublisherInterface
-     */
-    public static function getPublisher() : PublisherInterface;
 }

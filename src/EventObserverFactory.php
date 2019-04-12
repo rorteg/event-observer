@@ -9,52 +9,98 @@ use MadeiraMadeiraBr\Event\EventObserverFactoryInterface;
 final class EventObserverFactory implements EventObserverFactoryInterface
 {
     /** @var PublisherInterface|null */
-    protected static $publisher = null;
+    private $publisher;
 
     /**
-     * {@inheritdoc}
+     * @var array
      */
-    public static function attachObservers(array $observers) : void
-    {
-        if (is_null(self::$publisher)) {
-            self::setPublisher(new Publisher());
-        }
+    private $events = [];
 
-        foreach ($observers as $priority => $observer) {
-            self::$publisher->attach(new $observer($priority));
-        }
+    /**
+     * @var EventObserverFactoryInterface
+     */
+    private static $instance;
+
+    private function __construct()
+    {
+        $this->publisher = new Publisher();
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function dispatchEvent(string $eventName, array $subscribers, $data = []) : PublisherInterface
+    public static function getInstance() : EventObserverFactoryInterface
     {
-        self::attachObservers($subscribers);
-        self::$publisher->setEvent($data);
-        self::$publisher->notify();
-
-        return self::$publisher;
+        if (! self::$instance) {
+            self::$instance = new self();
+        }
+        
+        return self::$instance;
     }
 
     /**
-     * Set Publisher
+     * {@inheritdoc}
+     */
+    public function addEventKey(string $eventKey) : EventObserverFactoryInterface
+    {
+        $this->events[$eventKey] = [];
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getEvents() : array
+    {
+        return $this->events;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addObserversToEvent(string $eventKey, array $observers) : EventObserverFactoryInterface
+    {
+        $this->events[$eventKey] = $observers;
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function dispatchEvent(string $eventKey, $data = []) : PublisherInterface
+    {
+        if (! array_key_exists($eventKey, $this->events)) {
+            throw new EventException('This event has not been set.');
+        }
+
+        $this->publisher->setEvent($data);
+
+        if (is_array($this->events[$eventKey])) {
+            foreach ($this->events[$eventKey] as $observer) {
+                $this->attachObserverReferenceToEvent($observer);
+            }
+
+            $this->publisher->notify();
+        }
+        
+        return $this->publisher;
+    }
+
+    /**
+     * Attach Observer Referente to Event.
      *
-     * @param PublisherInterface $publisher
+     * @param ObserverInterface $observerReference
      * @return void
      */
-    public static function setPublisher(PublisherInterface $publisher) : void
+    private function attachObserverReferenceToEvent($observerReference)
     {
-        self::$publisher = $publisher;
-    }
+        if (! class_exists($observerReference)) {
+            throw new EventException(
+                'The observer reference must be an existing PHP class and implement the ObserverInterface'
+            );
+        }
 
-    /**
-     * Get Publisher
-     *
-     * @return PublisherInterface
-     */
-    public static function getPublisher() : PublisherInterface
-    {
-        return self::$publisher;
+        $this->publisher->attach(new $observerReference);
     }
 }
