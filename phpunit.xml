@@ -14,4 +14,11 @@
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <ini name="date.timezone" value="America/Sao_Paulo"/>
+        <ini name="xdebug.max_nesting_level" value="200"/>
+    </php>
+    <logging>
+        <log type="coverage-clover" target="clover.xml" showUncoveredFiles="false"/>
+    </logging>
 </phpunit>
