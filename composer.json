@@ -27,6 +27,12 @@
         }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+        "test": "./vendor/bin/phpunit",
+        "test:coverage": [
+            "./vendor/bin/phpunit --coverage-clover clover.xml"
+        ],
+        "upload-coverage": [
+            "vendor/bin/php-coveralls -v"
+        ]
     }
 }
