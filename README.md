@@ -1,5 +1,7 @@
 # Event Observer
 
+[![Build Status](https://travis-ci.org/rorteg/event-observer.svg?branch=master)](https://travis-ci.org/rorteg/event-observer) [![Coverage Status](https://coveralls.io/repos/github/rorteg/event-observer/badge.svg?branch=master)](https://coveralls.io/github/rorteg/event-observer?branch=master)
+
 ## Descrição
 Lib para implementar o pattern Observer: https://pt.wikipedia.org/wiki/Observer
 
