@@ -26,15 +26,6 @@ Lógicas de negócio que precisam fazer diversas ações após salvar os dados n
 Um exemplo clássico seria enviar um e-mail após salvar um pedido, você pode criar métodos (afterSave, afterUpdate) e simplesmente implementar o disparo de um evento, a responsabilidade de enviar email, notificações, etc, ficariam por conta dos observadores.
 
 ## Instalação
-
-Adicione as seguintes linhas no composer.json
-
-    "repositories": [
-        {
-            "type": "git",
-            "url":  "git@github.com:rorteg/event-observer.git"
-        }
-    ]
     
 Execute:
 ```
