@@ -112,4 +112,22 @@ class PublisherTest extends TestCase
 
         $this->assertSame($expectedData, $publisher->getEvent());
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidArgumentExceptionWhenAttachNotImplementObserverInterface()
+    {
+        $observer = $this->getMockBuilder(\SplObserver::class)->getMock();
+        $this->publisher->attach($observer);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidArgumentExceptionWhenDetachNotImplementObserverInterface()
+    {
+        $observer = $this->getMockBuilder(\SplObserver::class)->getMock();
+        $this->publisher->detach($observer);
+    }
 }
