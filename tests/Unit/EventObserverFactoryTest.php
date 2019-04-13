@@ -40,4 +40,26 @@ class EventObserverFactoryTest extends TestCase
         $factoryInstance = EventObserverFactory::getInstance();
         $this->assertContains(ObserverInterface::class, $factoryInstance->getEvents()['event_test']);
     }
+
+    /**
+     * @expectedException \MadeiraMadeiraBr\Event\EventException
+     */
+    public function testExceptionWhenDispatchNotValidEvent()
+    {
+        $factoryInstance = EventObserverFactory::getInstance();
+        $factoryInstance->dispatchEvent('not_exists');
+    }
+
+    /**
+     * @expectedException \MadeiraMadeiraBr\Event\EventException
+     */
+    public function testAttachObserverReferenceToEventWhenDoNotExistsClass()
+    {
+        $factoryInstance = EventObserverFactory::getInstance();
+        $factoryInstance->addObserversToEvent('event_test', [
+            'ClassReferenceNotExists'
+        ]);
+
+        $factoryInstance->dispatchEvent('event_test');
+    }
 }
