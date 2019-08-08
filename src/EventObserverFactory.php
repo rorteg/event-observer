@@ -21,11 +21,6 @@ final class EventObserverFactory implements EventObserverFactoryInterface
      */
     private static $instance;
 
-    private function __construct()
-    {
-        $this->publisher = new Publisher();
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -67,6 +62,7 @@ final class EventObserverFactory implements EventObserverFactoryInterface
 
     /**
      * {@inheritdoc}
+     * @throws EventException
      */
     public function dispatchEvent(string $eventKey, $data = []) : PublisherInterface
     {
@@ -74,6 +70,7 @@ final class EventObserverFactory implements EventObserverFactoryInterface
             throw new EventException('This event has not been set.');
         }
 
+        $this->publisher = new Publisher();
         $this->publisher->setEvent($data);
 
         if (is_array($this->events[$eventKey])) {
@@ -92,6 +89,7 @@ final class EventObserverFactory implements EventObserverFactoryInterface
      *
      * @param ObserverInterface $observerReference
      * @return void
+     * @throws EventException
      */
     private function attachObserverReferenceToEvent($observerReference)
     {
