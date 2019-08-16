@@ -44,15 +44,6 @@ class EventObserverFactoryTest extends TestCase
     /**
      * @expectedException \MadeiraMadeiraBr\Event\EventException
      */
-    public function testExceptionWhenDispatchNotValidEvent()
-    {
-        $factoryInstance = EventObserverFactory::getInstance();
-        $factoryInstance->dispatchEvent('not_exists');
-    }
-
-    /**
-     * @expectedException \MadeiraMadeiraBr\Event\EventException
-     */
     public function testAttachObserverReferenceToEventWhenDoNotExistsClass()
     {
         $factoryInstance = EventObserverFactory::getInstance();
