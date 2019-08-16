@@ -66,14 +66,14 @@ final class EventObserverFactory implements EventObserverFactoryInterface
      */
     public function dispatchEvent(string $eventKey, $data = []) : PublisherInterface
     {
-        if (! array_key_exists($eventKey, $this->events)) {
+        /*if (! array_key_exists($eventKey, $this->events)) {
             throw new EventException('This event has not been set.');
-        }
+        }*/
 
         $this->publisher = new Publisher();
         $this->publisher->setEvent($data);
 
-        if (is_array($this->events[$eventKey])) {
+        if (isset($this->events[$eventKey]) && is_array($this->events[$eventKey])) {
             foreach ($this->events[$eventKey] as $observer) {
                 $this->attachObserverReferenceToEvent($observer);
             }

@@ -19,4 +19,11 @@ class EventObserverFactoryTest extends TestCase
 
         $this->assertEquals('Object (Observer2) Stub executed.', \current($publisher->getEvent()));
     }
+
+    public function testDispatchEventWhenEventNotExists()
+    {
+        $eventFactory = EventObserverFactory::getInstance();
+        $publisher = $eventFactory->dispatchEvent('event_not_exists');
+        $this->assertIsArray($publisher->getEvent());
+    }
 }
